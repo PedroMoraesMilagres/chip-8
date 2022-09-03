@@ -4,6 +4,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <ios>
+#include <iostream>
 #include <string>
 #include "../include/fontset.hpp"
 
@@ -12,16 +13,15 @@ using Word = unsigned short;
 
 struct Chip8
 {
-    Word memory[0x1000]; // 4Kb memory
-    Word PC, I; // 16 bit program counter, 16 bit index register,
-    Word stack[12]; // 16 bit stack
-    Word opcode; // current instruction
-    Byte display[64 * 32]; // pixel data
+    Word memory[4096]; // 4Kb memory
+    Word PC{}, I{}; // 16 bit program counter, 16 bit index register,
+    Word stack[16]; // 16 bit stack
+    Word opcode{}; // current instruction
+    Byte display[64 * 32]{}; // pixel data
     Byte keypad[16]; // keypad
-    Byte SP, DelayTimer; // 8 bit stack pointer, 8 bit delay timer
+    Byte SP{}, DelayTimer{}; // 8 bit stack pointer, 8 bit delay timer
     Byte V[16]; // 8 bit 16 general purpose variable register
-    bool drawFlag;
-
+    bool drawFlag = false;
 
     void LoadFontset() 
     {
@@ -31,25 +31,44 @@ struct Chip8
         };
     };
 
+    void LoadROM(const char* filename)
+    {   
+        std::ifstream file(filename, std::ios::binary | std::ios::in);
 
-    void LoadROM(const char* filename, unsigned pos = 0x200)
-    {
-        for(std::ifstream f(filename, std::ios::binary); f.good();)
+        if (file.good())
         {
-            memory[pos++ & 0xFFF] = f.get();
+            file.seekg(0, std::ios::end);
+            size_t file_size = file.tellg();
+            file.seekg(0, std::ios::beg);
+
+            char* buffer = new char[file_size];
+
+            file.read(buffer, file_size);
+            file.close();
+
+            if (file_size < (4096 - 512))
+            {
+                for (int i = 0; i < file_size; ++i)
+                    memory[0x200 + i] = buffer[i];
+            } else { 
+                std::cerr << "The file is too big!" << std::endl;
+            };
+
+            delete[] buffer;        
         };
     };
 
     void EmulateCycle()
     {     
-        // opcode = memory[PC] >> 8 | memory[PC + 1]; PC += 2; // fetch the instruction
-        opcode = memory[PC & 0xFFF]*0x100 + memory[(PC+1) & 0xFFF]; PC += 2;
+        opcode = memory[PC] << 8 | memory[PC + 1]; // fetch the instruction
 
-        Word VX = (opcode & 0x000F) >> 8;
-        Word VY = (opcode & 0x000F) >> 4;
-        Word N = opcode & 0x000F;
-        Word NN = opcode & 0x00FF;
+        Byte VX = (opcode & 0x0F00) >> 8;
+        Byte VY = (opcode & 0x00F0) >> 4;
+        Byte N = opcode & 0x000F;
+        Byte NN = opcode & 0x00FF;
         Word NNN = opcode & 0x0FFF;
+        
+        PC += 2;
         
         switch ((opcode & 0xF000) >> 12)
         {

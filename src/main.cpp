@@ -4,7 +4,7 @@
 #include "chip8.cpp"
 #include <unistd.h>
 
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
 
     Chip8 chip8;
@@ -13,6 +13,7 @@ int main(int argc, char** argv)
     while (true)
     {
         chip8.EmulateCycle();
-        sleep(1);
     };
+
+    return 0;
 };
