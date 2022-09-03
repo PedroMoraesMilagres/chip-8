@@ -77,10 +77,12 @@ struct Chip8
                 {
                     case 0xE0: // 00E0 - CLS
                         printf("%04X\tCLS", opcode);
+                        memset(display, 0, sizeof display);
                     break;
                     
                     case 0xEE: // 00EE - RET
                         printf("%04X\tRET", opcode);
+
                     break;
 
                     default:
@@ -91,6 +93,7 @@ struct Chip8
 
             case 0x1: // 1nnn - JP addr
                 printf("%04X\tJP $%03X\n", opcode, NNN);
+                PC = NNN;
             break;
 
             case 0x2: // 2nnn - CALL addr
