@@ -82,7 +82,6 @@ struct Chip8
                     
                     case 0xEE: // 00EE - RET
                         printf("%04X\tRET", opcode);
-
                     break;
 
                     default:
@@ -248,6 +247,11 @@ struct Chip8
             break;
         };
 
+    };
+    void UpdateTimers()
+    {
+    if (DelayTimer > 0)
+        --DelayTimer;
     };
 };
 
