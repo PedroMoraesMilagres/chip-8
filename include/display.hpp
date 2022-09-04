@@ -11,7 +11,7 @@ class Display
         Display();
         ~Display();
         void KeysInput();
-        void Update();
+        void Update(void const* buffer, int pitch);
     private:
     	  SDL_Window* window{};
 	      SDL_Renderer* renderer{};
