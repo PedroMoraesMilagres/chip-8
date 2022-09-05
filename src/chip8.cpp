@@ -1,11 +1,6 @@
-#include <cstdint>
-#include <cstdio>
 #include <fstream>
-#include <cstring>
-#include <cstdlib>
-#include <ios>
+#include <string.h>
 #include <iostream>
-#include <string>
 #include "../include/fontset.hpp"
 
 using Byte = unsigned char;
@@ -23,7 +18,7 @@ struct Chip8
     Byte V[16]; // 8 bit 16 general purpose variable register
     bool drawFlag = false;
 
-    void LoadFontset() 
+    void LoadFontset()
     {
         for (unsigned int i = 0; i < 80; ++i)
         {
