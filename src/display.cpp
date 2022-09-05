@@ -1,21 +1,6 @@
-#pragma once
-
-#include <SDL2/SDL_events.h>
-#include <SDL2/SDL_keyboard.h>
-#include <SDL2/SDL_keycode.h>
-#include <SDL2/SDL_pixels.h>
-#include <cstdlib>
 #include "../include/display.hpp"
 #include "../src/chip8.cpp"
-#include <SDL2/SDL_render.h>
-#include <SDL2/SDL_shape.h>
-#include <SDL2/SDL_video.h>
-#include <SDL2/SDL.h>
-#include <endian.h>
-
-
-int WIDTH = 800;
-int HEIGHT = 600;
+#include "../include/SDLKeymap.hpp"
 
 Chip8 chip8;
 
@@ -24,11 +9,11 @@ Display::Display()
     SDL_Init(SDL_INIT_EVERYTHING);
 
     window = SDL_CreateWindow("Chip-8", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
-            WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
+            800, 600, SDL_WINDOW_SHOWN);
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-    texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, WIDTH, HEIGHT);
+    texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, 800, 600);
 };
 
 Display::~Display()
@@ -53,7 +38,7 @@ void Display::KeysInput()
             
             for (int i = 0; i < 16; i++)
             {
-                if (event.key.keysym.sym == chip8.keypad[i])
+                if (event.key.keysym.sym == SDLKeymap[i])
                 {
                     chip8.keypad[i] = 1;
                 };
@@ -62,7 +47,7 @@ void Display::KeysInput()
         if (event.type == SDL_KEYUP)
             for (int i = 0; i < 16; i++)
             {
-                if (event.key.keysym.sym == chip8.keypad[i])
+                if (event.key.keysym.sym == SDLKeymap[i])
                 {
                     chip8.keypad[i] = 1;
                 };
