@@ -2,7 +2,6 @@
 #include "../src/chip8.cpp"
 #include "../include/SDLKeymap.hpp"
 
-Chip8 chip8;
 
 Display::Display()
 {
@@ -25,7 +24,10 @@ Display::~Display()
 };
 
 void Display::KeysInput()
-{ 
+{   
+    
+    Chip8 chip8;
+
     SDL_Event event;
 
     while (SDL_PollEvent(&event))
@@ -57,10 +59,10 @@ void Display::KeysInput()
     };
 };
 
-void Display::Update(void const* buffer, int pitch)
+/* void Display::Update(void const* buffer, int pitch)
 {
     SDL_UpdateTexture(texture, nullptr, buffer, pitch);
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, texture, nullptr, nullptr);
     SDL_RenderPresent(renderer);
-};
+}; */ 
