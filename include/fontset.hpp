@@ -1,3 +1,6 @@
+#ifndef FONTSET
+#define FONTSET
+
 // Fontset
 static unsigned char Fontset[0x50] = 
 {
@@ -19,4 +22,5 @@ static unsigned char Fontset[0x50] =
     0xF0, 0x80, 0xF0, 0x80, 0x80  // F
 };
 
+#endif
 

@@ -1,3 +1,6 @@
+#ifndef SDLKEYMAP
+#define SDLKEYMAP
+
 #include <SDL2/SDL.h>
 
 const static unsigned char SDLKeymap[16] = 
@@ -7,3 +10,4 @@ const static unsigned char SDLKeymap[16] =
     SDLK_s, SDLK_d, SDLK_z, SDLK_c,   // 8 9 A B
     SDLK_4, SDLK_r, SDLK_f, SDLK_v    // C D E F
 };
+#endif
