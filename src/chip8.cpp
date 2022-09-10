@@ -113,7 +113,6 @@ struct Chip8
 
             case 0x7: // 7xnn - ADD Vx, byte
                 printf("%04X\tADD V$%01X $%02X\n", opcode, VX, NN);
-
                 V[VX] += NN;
             break;
 
@@ -168,6 +167,7 @@ struct Chip8
 
             case 0xA: // Annn - LD I, byte 
                 printf("%04X\tLD I$%03X $%03X\n", opcode, I, NNN);
+                I = NNN;
             break;
 
             case 0xB: // Bnnn V0, addr
