@@ -108,6 +108,7 @@ struct Chip8
 
             case 0x6: // 6xnn - LD Vx, byte
                 printf("%04X\tLD V$%01X $%02X\n", opcode, VX, NN);
+                V[VX] = NN;
             break;
 
             case 0x7: // 7xnn - ADD Vx, byte
