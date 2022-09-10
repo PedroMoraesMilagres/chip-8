@@ -177,8 +177,32 @@ struct Chip8
 
             case 0xD: // Dxy0 - Draw, Vx, Vy, N
                 printf("%04x\tDRW V$%01X V$%01X $%01X\n", opcode, VX, VY, N);
+                
+                V[0xF] = 0;
+                Byte pixel;
+
+                for (int row =0; row < N; ++row)
+                {
+                    pixel = memory[I + row];
+
+                    for (int col = 0; col < 8; ++col)
+                    {
+                        if((pixel & (0x80 >> col)) != 0)
+                        {
+                            Byte X = V[VX] = VX % 64;
+                            Byte Y = V[VY] = VY % 32;
+                        
+                        if (display[X + (Y * 64)])
+                        {
+                            V[0xF] = 1;
+                        };
+                        display[X * (Y * 64)] ^= 1;
+                        };
+                    };  
+                };
+                drawFlag = true;
             break;
-            
+
             case 0xE:
                 switch(NN)
                 {

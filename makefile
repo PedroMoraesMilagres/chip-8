@@ -4,7 +4,7 @@ INC := -I include
 SRC := src
 OBJ := obj
 LIB := -L/lib -lSDL2
-TARGET := ./bin/chip8
+TARGET := bin/chip8
 
 all:
 	$(CXX) $(CXXFLAGS) -c $(SRC)/chip8.cpp -o $(OBJ)/chip8.o
